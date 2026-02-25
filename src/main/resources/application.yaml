@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: yu-ai-code-mother
+
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+
+springdoc:
+  group-configs:
+    - group: "Yu-ai-code-mother"
+      # 扫描目录
+      packages-to-scan: cn.iocoder.cloud.yuaicodemother.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
