@@ -6,13 +6,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.iocoder.cloud.yuaicodemother.exception.BusinessException;
 import cn.iocoder.cloud.yuaicodemother.exception.ErrorCode;
 import cn.iocoder.cloud.yuaicodemother.mapper.UserMapper;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserLoginRequest;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserQueryRequest;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserRegisterRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserLoginRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserQueryRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserRegisterRequest;
 import cn.iocoder.cloud.yuaicodemother.model.entity.User;
 import cn.iocoder.cloud.yuaicodemother.model.enums.UserRoleEnum;
-import cn.iocoder.cloud.yuaicodemother.model.vo.LoginUserVO;
-import cn.iocoder.cloud.yuaicodemother.model.vo.UserVO;
+import cn.iocoder.cloud.yuaicodemother.model.vo.user.LoginUserVO;
+import cn.iocoder.cloud.yuaicodemother.model.vo.user.UserVO;
 import cn.iocoder.cloud.yuaicodemother.service.UserService;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static cn.iocoder.cloud.yuaicodemother.constant.userConstant.USER_LOGIN_STATE;
+import static cn.iocoder.cloud.yuaicodemother.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * 用户 服务层实现。

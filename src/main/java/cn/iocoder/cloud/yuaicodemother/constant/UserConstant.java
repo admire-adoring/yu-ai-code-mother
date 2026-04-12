@@ -6,7 +6,7 @@ package cn.iocoder.cloud.yuaicodemother.constant;
  * @Date 2026/4/12 02:35
  */
 // 设置为 interface 可以自动加final
-public interface userConstant {
+public interface UserConstant {
     // 用户登录态键
     String USER_LOGIN_STATE = "user_login";
 

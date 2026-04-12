@@ -1,17 +1,19 @@
-package cn.iocoder.cloud.yuaicodemother.model.vo;
+package cn.iocoder.cloud.yuaicodemother.model.dto.user;
 
+import cn.iocoder.cloud.yuaicodemother.common.PageRequest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Description
  * @Author Liu Yang
  * @Date 2026/4/12 03:08
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserVO implements Serializable {
+public class UserQueryRequest extends PageRequest implements Serializable {
 
     /**
      * id
@@ -19,34 +21,24 @@ public class UserVO implements Serializable {
     private Long id;
 
     /**
-     * 账号
-     */
-    private String userAccount;
-
-    /**
      * 用户昵称
      */
     private String userName;
 
     /**
-     * 用户头像
+     * 账号
      */
-    private String userAvatar;
+    private String userAccount;
 
     /**
-     * 用户简介
+     * 简介
      */
     private String userProfile;
 
     /**
-     * 用户角色：user/admin
+     * 用户角色：user/admin/ban
      */
     private String userRole;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
 
     private static final long serialVersionUID = 1L;
 }

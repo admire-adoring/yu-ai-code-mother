@@ -1,4 +1,4 @@
-package cn.iocoder.cloud.yuaicodemother.model.vo;
+package cn.iocoder.cloud.yuaicodemother.model.vo.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

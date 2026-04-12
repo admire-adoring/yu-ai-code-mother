@@ -1,4 +1,4 @@
-package cn.iocoder.cloud.yuaicodemother.model.dto;
+package cn.iocoder.cloud.yuaicodemother.model.dto.user;
 
 import lombok.Data;
 

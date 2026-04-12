@@ -2,10 +2,10 @@ package cn.iocoder.cloud.yuaicodemother.controller;
 
 import cn.iocoder.cloud.yuaicodemother.common.BaseResponse;
 import cn.iocoder.cloud.yuaicodemother.common.ResultUtils;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserLoginRequest;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserRegisterRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserLoginRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserRegisterRequest;
 import cn.iocoder.cloud.yuaicodemother.model.entity.User;
-import cn.iocoder.cloud.yuaicodemother.model.vo.LoginUserVO;
+import cn.iocoder.cloud.yuaicodemother.model.vo.user.LoginUserVO;
 import cn.iocoder.cloud.yuaicodemother.service.UserService;
 import com.mybatisflex.core.paginate.Page;
 import jakarta.servlet.http.HttpServletRequest;

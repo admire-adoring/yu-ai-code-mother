@@ -1,10 +1,10 @@
 package cn.iocoder.cloud.yuaicodemother.service;
 
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserLoginRequest;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserQueryRequest;
-import cn.iocoder.cloud.yuaicodemother.model.dto.UserRegisterRequest;
-import cn.iocoder.cloud.yuaicodemother.model.vo.LoginUserVO;
-import cn.iocoder.cloud.yuaicodemother.model.vo.UserVO;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserLoginRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserQueryRequest;
+import cn.iocoder.cloud.yuaicodemother.model.dto.user.UserRegisterRequest;
+import cn.iocoder.cloud.yuaicodemother.model.vo.user.LoginUserVO;
+import cn.iocoder.cloud.yuaicodemother.model.vo.user.UserVO;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.service.IService;
 import cn.iocoder.cloud.yuaicodemother.model.entity.User;
