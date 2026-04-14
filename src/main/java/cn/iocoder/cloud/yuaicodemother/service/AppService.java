@@ -2,9 +2,11 @@ package cn.iocoder.cloud.yuaicodemother.service;
 
 import cn.iocoder.cloud.yuaicodemother.model.dto.app.AppQueryRequest;
 import cn.iocoder.cloud.yuaicodemother.model.entity.App;
+import cn.iocoder.cloud.yuaicodemother.model.entity.User;
 import cn.iocoder.cloud.yuaicodemother.model.vo.app.AppVO;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.service.IService;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ import java.util.List;
  * @author L
  */
 public interface AppService extends IService<App> {
+
+    Flux<String> chatToGenCode(Long appId, String message, User loginUser);
 
     /**
      * 获取应用封装类
