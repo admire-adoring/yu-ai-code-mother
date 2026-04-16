@@ -100,7 +100,7 @@ public class AppController {
         User loginUser = userService.getLoginUser(request);
         // 调用服务生成代码（流式）
         Flux<String> contentFlux = appService.chatToGenCode(appId, message, loginUser);
-        // 转换为 ServerSentEvent 格式
+        // 转换为 ServerSentEvent 格式，并在流中捕获异常
         return contentFlux
                 .map(chunk -> {
                     // 将内容包装成JSON对象
@@ -109,6 +109,14 @@ public class AppController {
                     return ServerSentEvent.<String>builder()
                             .data(jsonData)
                             .build();
+                })
+                .onErrorResume(error -> {
+                    // 在流中捕获异常，发送错误事件
+                    Map<String, String> errorWrapper = Map.of("error", error.getMessage());
+                    String errorJson = JSONUtil.toJsonStr(errorWrapper);
+                    return Flux.just(ServerSentEvent.<String>builder()
+                            .data(errorJson)
+                            .build());
                 });
     }
 

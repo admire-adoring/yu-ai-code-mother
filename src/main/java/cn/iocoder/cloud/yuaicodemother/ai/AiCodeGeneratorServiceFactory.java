@@ -1,52 +1,88 @@
 package cn.iocoder.cloud.yuaicodemother.ai;
 
+import cn.iocoder.cloud.yuaicodemother.service.ChatHistoryService;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import dev.langchain4j.community.store.memory.chat.redis.RedisChatMemoryStore;
+import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
+
 @Configuration
+@Slf4j
 public class AiCodeGeneratorServiceFactory {
 
-    //        @Value("${langchain4j.open-ai.chat-model.base-url}")
-    //        private String baseUrl;
-    //
-    //        @Value("${langchain4j.open-ai.chat-model.api-key}")
-    //        private String apiKey;
-    //
-    //        @Value("${langchain4j.open-ai.chat-model.model-name}")
-    //        private String modelName;
-    //
-    //        @Bean
-    //        public ChatModel chatModel() {
-    //            return OpenAiChatModel.builder()
-    //                    .baseUrl(baseUrl)
-    //                    .apiKey(apiKey)
-    //                    .modelName(modelName)
-    //
-    //                    .build();
-    //        }
-    //
-    //        @Bean
-    //        public AiCodeGeneratorService aiCodeGeneratorService(ChatModel chatModel) {
-    //            return AiServices.create(AiCodeGeneratorService.class, chatModel);
-    //        }
     @Resource
     private ChatModel chatModel;
 
     @Resource
     private StreamingChatModel streamingChatModel;
 
-    @Bean
-    public AiCodeGeneratorService aiCodeGeneratorService () {
-        //        return AiServices.create(AiCodeGeneratorService.class, chatModel);
+    @Resource
+    private RedisChatMemoryStore redisChatMemoryStore;
+
+    @Resource
+    private ChatHistoryService chatHistoryService;
+
+    /**
+     * 创建 AI 代码生成器服务
+     * AI 服务实例缓存
+     * 缓存策略：
+     * - 最大缓存 1000 个实例
+     * - 写入后 30 分钟过期
+     * - 访问后 10 分钟过期
+     */
+    private final Cache<Long, AiCodeGeneratorService> serviceCache = Caffeine.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(Duration.ofMinutes(30))
+            .expireAfterAccess(Duration.ofMinutes(10))
+            .removalListener((key, value, cause) -> {
+                log.debug("AI 服务实例被移除，appId: {}, 原因: {}", key, cause);
+            })
+            .build();
+
+    /**
+     * 根据 appId 获取服务
+     *
+     * @param appId
+     * @return
+     */
+    public AiCodeGeneratorService getAiCodeGeneratorService(long appId) {
+        return serviceCache.get(appId, this::createAiCodeGeneratorService);
+    }
+
+    /**
+     * 创建 AI 代码生成服务
+     *
+     * @param appId 应用编号
+     * @return AI 代码生成服务
+     */
+    private AiCodeGeneratorService createAiCodeGeneratorService(Long appId) {
+        MessageWindowChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .id(appId)
+                .chatMemoryStore(redisChatMemoryStore)
+                .maxMessages(20)
+                .build();
+        // 从数据库中加载对话历史到记忆中
+        chatHistoryService.loadChatHistoryToMemory(appId, chatMemory, 20);
         return AiServices.builder(AiCodeGeneratorService.class)
                 .chatModel(chatModel)
                 .streamingChatModel(streamingChatModel)
+                .chatMemory(chatMemory)
                 .build();
     }
+
+    @Bean
+    public AiCodeGeneratorService aiCodeGeneratorServiceApp() {
+        return createAiCodeGeneratorService(0L);
+    }
+
 }

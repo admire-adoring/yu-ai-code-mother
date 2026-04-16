@@ -36,3 +36,4 @@ build/
 application-local.yml
 tmp
 test
+tmp/
