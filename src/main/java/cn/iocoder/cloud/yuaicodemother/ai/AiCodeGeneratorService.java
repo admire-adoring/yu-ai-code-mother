@@ -4,7 +4,7 @@ import cn.iocoder.cloud.yuaicodemother.ai.model.HtmlCodeResult;
 import cn.iocoder.cloud.yuaicodemother.ai.model.MultiFileCodeResult;
 import dev.langchain4j.service.SystemMessage;
 import reactor.core.publisher.Flux;
-//import reactor.core.publisher.Flux;
+
 /**
  * @Description AI 代码生成
  * @Author Liu Yang
@@ -18,7 +18,7 @@ public interface AiCodeGeneratorService {
      * @param userMessage 用户消息
      * @return 生成的代码结果
      */
-    @SystemMessage(fromResource = "prompt/codegen-html-system-prompt.txt")
+    @SystemMessage(fromResource = "/prompt/codegen-html-system-prompt.txt")
     HtmlCodeResult generateHtmlCode(String userMessage);
 
     /**
@@ -27,7 +27,7 @@ public interface AiCodeGeneratorService {
      * @param userMessage 用户消息
      * @return 生成的代码结果
      */
-    @SystemMessage(fromResource = "prompt/codegen-multi-file-system-prompt.txt")
+    @SystemMessage(fromResource = "/prompt/codegen-multi-file-system-prompt.txt")
     MultiFileCodeResult generateMultiFileCode(String userMessage);
 
     /**
@@ -36,7 +36,7 @@ public interface AiCodeGeneratorService {
      * @param userMessage 用户提示词
      * @return AI 的输出结果
      */
-    @SystemMessage(fromResource = "prompt/codegen-html-system-prompt.txt")
+    @SystemMessage(fromResource = "/prompt/codegen-html-system-prompt.txt")
     Flux<String> generateHtmlCodeStream(String userMessage);
 
     /**
@@ -45,7 +45,7 @@ public interface AiCodeGeneratorService {
      * @param userMessage 用户提示词
      * @return AI 的输出结果
      */
-    @SystemMessage(fromResource = "prompt/codegen-multi-file-system-prompt.txt")
+    @SystemMessage(fromResource = "/prompt/codegen-multi-file-system-prompt.txt")
     Flux<String> generateMultiFileCodeStream(String userMessage);
 
 }
